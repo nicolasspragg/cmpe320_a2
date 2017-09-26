@@ -7,12 +7,12 @@ using namespace std;
 class Fraction {
 public:
     Fraction();
-    Fraction(int t);
-    Fraction(int t, int b);
+    Fraction(int top);
+    Fraction(int top, int bottom);
     int getTop();
     int getBottom();
     void fixFraction();
-    void gcd(int m, int m);
+    int gcd(int n, int m);
 private:
     int topNum;
     int bottomNum;
