@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <iostream>
+#include<fstream>
+#include <sstream>
+#include<string>
 using namespace std;
 
 class Fraction {
@@ -12,12 +16,14 @@ public:
     int getTop();
     int getBottom();
     void fixFraction();
-    int gcd(int n, int m);
 private:
     int topNum;
     int bottomNum;
 
 };
+
+ostream& operator << (ostream& output,  Fraction& frac);
+
 
 class FractionException {
 public:

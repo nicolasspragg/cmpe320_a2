@@ -34,39 +34,37 @@ int Fraction::getBottom() {
 }
 
 void Fraction::fixFraction() {
-
-    if(topNum < 0 && bottomNum <0) {
+    int s = 1;
+    if(topNum < 0) {
+        s = -s;
         topNum = -topNum;
     }
     if (bottomNum < 0) {
+        s = -s;
         topNum = -topNum;
     }
 
     for (int i = bottomNum * topNum; i >1; i--) {
         if(bottomNum % i == 0 && topNum % i == 0) {
-            bottomNum /= i;
-            topNum /= i;
+            bottomNum /= i * s;
+             topNum /= i;
         }
 
     }
 
-
-
-
-
-
 }
 
-int Fraction::gcd(int n, int m) {
-    if(m <= n && n%m == 0) {
-        return m;
-    } else if(n < m) {
-        return gcd(m,n);
-    } else {
-        return gcd(m,n%m);
-    }
+ostream& operator << (ostream& output,  Fraction& frac) {
+    return output << frac.getTop() << "/" << frac.getBottom() << endl;
+}
+
+FractionException::FractionException(const string &m) : message(m) {};
+
+string FractionException::what() {
+    return message;
 }
 
 int main () {
-    cout << "hello";
+Fraction test(4/2);
+    cout << test;
 }
