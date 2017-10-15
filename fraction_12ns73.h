@@ -13,9 +13,11 @@ public:
     Fraction();
     Fraction(int top);
     Fraction(int top, int bottom);
-    int getTop();
-    int getBottom();
+    int getTop() const ;
+    int getBottom() const;
     void fixFraction();
+
+
 private:
     int topNum;
     int bottomNum;
@@ -23,6 +25,13 @@ private:
 };
 
 ostream& operator << (ostream& output,  Fraction& frac);
+Fraction operator+( const Fraction& left,  const Fraction& right);
+Fraction operator-(const Fraction& left,  const Fraction& right);
+Fraction operator-( const Fraction& fraction); // negation
+Fraction operator*( const Fraction& left, const  Fraction& right);
+Fraction operator/( const Fraction& left, const  Fraction& right);
+Fraction operator+=( Fraction& left, Fraction& right);
+
 
 
 class FractionException {

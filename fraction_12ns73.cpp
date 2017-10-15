@@ -25,11 +25,11 @@ Fraction::Fraction(int top, int bottom) {
 }
 
 
-int Fraction::getTop() {
+int Fraction::getTop() const{
     return topNum;
 }
 
-int Fraction::getBottom() {
+int Fraction::getBottom() const {
     return bottomNum;
 }
 
@@ -58,6 +58,36 @@ ostream& operator << (ostream& output,  Fraction& frac) {
     return output << frac.getTop() << "/" << frac.getBottom() << endl;
 }
 
+Fraction operator+( const Fraction& left,  const Fraction& right) {
+    Fraction fractionAfterAdding(left.getTop() * right.getBottom() + left.getBottom() * right.getTop(), left.getBottom() * right.getBottom());
+    return fractionAfterAdding;
+}
+
+Fraction operator-( const  Fraction& left, const Fraction& right) {
+    Fraction fractionAfterAdding(left.getTop() * right.getBottom() - left.getBottom() * right.getTop(), left.getBottom() * right.getBottom());
+    return fractionAfterAdding;
+}
+
+Fraction operator-(const Fraction& fraction) {
+    Fraction negatedFraction(-fraction.getTop(), fraction.getBottom());
+    return negatedFraction;
+}
+Fraction operator*(  const Fraction& left,  const Fraction& right){
+    Fraction multipliedFraction(left.getTop() * right.getTop(),left.getBottom() * right.getBottom());
+    return multipliedFraction;
+}
+
+Fraction operator/( const Fraction& left, const Fraction& right){
+    Fraction dividedFraction(left.getTop() * right.getBottom(),left.getBottom() * right.getTop());
+    return dividedFraction;
+}
+
+Fraction operator+=( Fraction& left,  Fraction& right) {
+    Fraction temp(left.getTop()*right.getBottom() + right.getTop() * left.getBottom(), left.getBottom() * right.getBottom());
+    left = temp;
+    return left;
+}
+
 FractionException::FractionException(const string &m) : message(m) {};
 
 string FractionException::what() {
@@ -65,6 +95,10 @@ string FractionException::what() {
 }
 
 int main () {
-Fraction test(4/2);
-    cout << test;
+    Fraction test(5,2);
+    Fraction test2(5,2);
+
+    Fraction test3 = 2 - test;
+    cout << test3;
+
 }
