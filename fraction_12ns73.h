@@ -16,21 +16,36 @@ public:
     int getTop() const ;
     int getBottom() const;
     void fixFraction();
+    Fraction& operator-();
+    Fraction& operator++();// pre
+    Fraction& operator++(int makeEZtoSeeThatItisPost); // post
 
 
 private:
     int topNum;
     int bottomNum;
-
 };
+//IO
+ostream& operator<<(ostream& output,  const Fraction& frac);
+istream& operator>>(istream &input,  Fraction& frac);
 
-ostream& operator << (ostream& output,  Fraction& frac);
+// arithmetic op
 Fraction operator+( const Fraction& left,  const Fraction& right);
 Fraction operator-(const Fraction& left,  const Fraction& right);
-Fraction operator-( const Fraction& fraction); // negation
 Fraction operator*( const Fraction& left, const  Fraction& right);
 Fraction operator/( const Fraction& left, const  Fraction& right);
-Fraction operator+=( Fraction& left, Fraction& right);
+Fraction operator+=(Fraction& left, Fraction& right);
+//comparing ops
+bool operator>(const Fraction& left, const Fraction& right);
+bool operator<(const Fraction& left, const Fraction& right);
+bool operator<=(const Fraction& left, const Fraction& right);
+bool operator>=(const Fraction& left, const Fraction& right);
+bool operator==(const Fraction& left, const Fraction& right);
+bool operator!=(const Fraction& left, const Fraction& right);
+
+
+
+
 
 
 

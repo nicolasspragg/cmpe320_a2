@@ -54,10 +54,32 @@ void Fraction::fixFraction() {
 
 }
 
-ostream& operator << (ostream& output,  Fraction& frac) {
+ostream& operator << (ostream& output,  const Fraction& frac) {
     return output << frac.getTop() << "/" << frac.getBottom() << endl;
 }
 
+istream& operator>>(istream &input, Fraction &frac) {
+    int top;
+    int bottom;
+    char symbolChecker;
+    input >> top;
+
+    if(top == 0) {
+        frac = Fraction();
+        return input;
+    }
+
+    symbolChecker = input.peek();
+    if(symbolChecker == '/'){
+        input.get();
+        input >> bottom;
+    }
+
+    frac = Fraction(top,bottom);
+    return input;
+
+
+}
 Fraction operator+( const Fraction& left,  const Fraction& right) {
     Fraction fractionAfterAdding(left.getTop() * right.getBottom() + left.getBottom() * right.getTop(), left.getBottom() * right.getBottom());
     return fractionAfterAdding;
@@ -68,9 +90,9 @@ Fraction operator-( const  Fraction& left, const Fraction& right) {
     return fractionAfterAdding;
 }
 
-Fraction operator-(const Fraction& fraction) {
-    Fraction negatedFraction(-fraction.getTop(), fraction.getBottom());
-    return negatedFraction;
+Fraction &Fraction::operator-() {
+    topNum *= -1;
+    return *this;
 }
 Fraction operator*(  const Fraction& left,  const Fraction& right){
     Fraction multipliedFraction(left.getTop() * right.getTop(),left.getBottom() * right.getBottom());
@@ -82,10 +104,77 @@ Fraction operator/( const Fraction& left, const Fraction& right){
     return dividedFraction;
 }
 
-Fraction operator+=( Fraction& left,  Fraction& right) {
+Fraction operator+=( Fraction& left, Fraction& right) {
     Fraction temp(left.getTop()*right.getBottom() + right.getTop() * left.getBottom(), left.getBottom() * right.getBottom());
     left = temp;
     return left;
+}
+
+Fraction &Fraction::operator++() {
+    topNum += bottomNum;
+    return *this;
+}
+
+Fraction &Fraction::operator++(int) {
+    Fraction temp(*this);
+    ++*this;
+    return temp;
+
+}
+
+bool operator > (const Fraction& left, const Fraction& right){
+    float lhsRes = float(left.getTop()/ left.getBottom());
+    float rhsRes = float(right.getTop()/ right.getBottom());
+    if (lhsRes > rhsRes) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool operator < (const Fraction& left, const Fraction& right){
+    float lhsRes = float(left.getTop()/ left.getBottom());
+    float rhsRes = float(right.getTop()/ right.getBottom());
+    if (lhsRes < rhsRes) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool operator >=(const Fraction& left, const Fraction& right) {
+    if((left > right)||(left == right)) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+bool operator <=(const Fraction& left, const Fraction& right) {
+    if((left < right)||(left == right)) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+bool operator==(const Fraction& left, const Fraction& right) {
+    if(left.getTop() == right.getTop() && left.getBottom() == right.getBottom()) {
+        return true;
+    } else {
+        return false;
+    }
+
+}
+
+bool operator!=(const Fraction& left, const Fraction& right){
+    if(left.getTop() != right.getTop() || left.getBottom() != right.getBottom()) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 FractionException::FractionException(const string &m) : message(m) {};
@@ -95,10 +184,22 @@ string FractionException::what() {
 }
 
 int main () {
-    Fraction test(5,2);
-    Fraction test2(5,2);
 
-    Fraction test3 = 2 - test;
-    cout << test3;
+    // Test input, exception and +=:
+    Fraction sum(0);
+    Fraction fin;
+    cout << "\nSumming fractions. Enter fractions as \"1/2\" or just enter a single integer." << endl;
+    cout << "Enter zero to end the summation:" << endl;
+    do {
+        cout << "Enter a fraction to add to sum: ";
+        try {
+            cin >> fin;
+            sum += fin;
+        } catch (FractionException &e) {
+            cout << e.what() << endl;
+        }
+    } while (fin != 0);
+    cout << "Sum is: " << sum << endl;
+
 
 }
